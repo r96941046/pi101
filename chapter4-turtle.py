@@ -1,6 +1,6 @@
 import turtle
 import sys
-from Pyside import QtCore, QtGui
+from PySide import QtCore, QtGui
 
 
 import ipdb; ipdb.set_trace();
