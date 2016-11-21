@@ -1,6 +1,6 @@
 import turtle
 import sys
-from PySide import QtCore, QtGui
+from PySide import QtGui
 
 
 class TurtleControl(QtGui.QWidget):
