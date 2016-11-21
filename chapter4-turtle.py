@@ -27,6 +27,23 @@ class TurtleControl(QtGui.QWidget):
         self.distance_spin.setSingleStep(5)
         self.distance_spin.setValue(20)
 
+        self.move_btn.clicked.connect(self.move_turtle)
+        self.left_btn.clicked.connect(self.turn_turtle_left)
+        self.right_btn.clicked.connect(self.turn_turtle_right)
+
+    def turn_turtle_left(self):
+
+        self.turtle.left(45)
+
+    def turn_turtle_right(self):
+
+        self.turtle.right(45)
+
+    def move_turtle(self):
+
+        self.turtle.forward(self.distance_spin.value())
+
+
 # Setup turtle
 window = turtle.Screen()
 babbage = turtle.Turtle()
