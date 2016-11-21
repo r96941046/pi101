@@ -9,6 +9,7 @@ class TurtleControl(QtGui.QWidget):
 
         super(TurtleControl, self).__init__()
         self.turtle = turtle
+        self.turtle.color(100, 0, 0)
 
         self.left_btn = QtGui.QPushButton('Left', self)
         self.right_btn = QtGui.QPushButton('Right', self)
@@ -16,11 +17,14 @@ class TurtleControl(QtGui.QWidget):
 
         self.distance_spin = QtGui.QSpinBox()
 
+        self.color_label = QtGui.QLabel('Red', self)
+
         self.controlLayout = QtGui.QGridLayout()
         self.controlLayout.addWidget(self.left_btn, 0, 0)
         self.controlLayout.addWidget(self.right_btn, 0, 1)
         self.controlLayout.addWidget(self.distance_spin, 1, 0)
         self.controlLayout.addWidget(self.move_btn, 1, 1)
+        self.controlLayout.addWidget(self.color_label, 2, 0)
         self.setLayout(self.controlLayout)
 
         self.distance_spin.setRange(0, 100)
@@ -46,6 +50,7 @@ class TurtleControl(QtGui.QWidget):
 
 # Setup turtle
 window = turtle.Screen()
+window.colormode(255)
 babbage = turtle.Turtle()
 
 # Create a Qt application
