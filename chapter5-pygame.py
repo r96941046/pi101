@@ -78,7 +78,7 @@ screen_x, screen_y = 600, 400
 game_name = 'Awesome Raspberry Pi Platformer'
 
 player_spawn_x, player_spawn_y = 50, 200
-player_image = 'lidia.xcf'
+player_image = 'lidia.png'
 
 # Initialize pygame.mixer
 
