@@ -7,7 +7,13 @@ from random import randint
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, start_x, start_y, width, height):
-        pass
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(pygame.image.load(player_image), (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.x = start_x
+        self.rect.y = start_y
+        self.speed_y = 0
+        self.base = pygame.Rect(start_x, start_y + height, width, 2)
 
     def move_y(self):
         pass
@@ -68,9 +74,11 @@ class Fireball(pygame.sprite.Sprite):
 
 
 # Options
-screen_x = 600
-screen_y = 400
+screen_x, screen_y = 600, 400
 game_name = 'Awesome Raspberry Pi Platformer'
+
+player_spawn_x, player_spawn_y = 50, 200
+player_image = 'lidia.xcf'
 
 # Initialize pygame.mixer
 
@@ -85,6 +93,9 @@ screen = pygame.display.get_surface()
 finished = False
 clock = pygame.time.Clock()
 
+player = Player(player_spawn_x, player_spawn_y, 20, 30)
+player_plain = pygame.sprite.RenderPlain(player)
+
 # Setup the background
 # Each loop is a frame
 while not finished:
@@ -97,8 +108,12 @@ while not finished:
 
     # Check which keys are held
     # Move the player with gravity
-    # Rander the frame
+    # Render the frame
+    player_plain.draw(screen)
+
     # Update the display
+    pygame.display.update()
+
     # Check if the player is dead
     # Check if the player has completed the level
     # Set the speed
