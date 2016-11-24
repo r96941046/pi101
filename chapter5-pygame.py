@@ -68,16 +68,33 @@ class Fireball(pygame.sprite.Sprite):
 
 
 # Options
+screen_x = 600
+screen_y = 400
+game_name = 'Awesome Raspberry Pi Platformer'
+
 # Initialize pygame.mixer
+
 # Initialize pygame
+pygame.init()
+window = pygame.display.set_mode((screen_x, screen_y))
+pygame.display.set_caption(game_name)
+screen = pygame.display.get_surface()
+
 # Load level
 # Initialize variables
 finished = False
+clock = pygame.time.Clock()
+
 # Setup the background
+# Each loop is a frame
 while not finished:
     pass
     # Blank screen
     # Check events
+    for event in pygame.event.get():
+        if event.type == lc.QUIT:
+            finished = True
+
     # Check which keys are held
     # Move the player with gravity
     # Rander the frame
@@ -85,3 +102,4 @@ while not finished:
     # Check if the player is dead
     # Check if the player has completed the level
     # Set the speed
+    clock.tick(20)
