@@ -32,7 +32,10 @@ class Player(pygame.sprite.Sprite):
         self.base.y = self.rect.y + self.rect.height
 
     def jump(self, speed):
-        pass
+
+        if world.collided_get_y(self.base) > 0:
+
+            self.speed_y = speed
 
 
 class World():
@@ -64,7 +67,10 @@ class World():
             self.posn_y = self.posn_y + block_size
 
     def move(self, dist):
-        pass
+
+        for block in self.platforms + self.goals:
+
+            block.move_ip(dist, 0)
 
     def collided_get_y(self, player_rect):
 
@@ -149,6 +155,8 @@ goal_color = (0, 0, 255)
 
 gravity = 1
 
+jump_speed = -10
+
 # Initialize pygame.mixer
 
 # Initialize pygame
@@ -180,6 +188,20 @@ while not finished:
             finished = True
 
     # Check which keys are held
+    key_state = pygame.key.get_pressed()
+
+    if key_state[lc.K_LEFT]:
+
+        world.move(2)
+
+    elif key_state[lc.K_RIGHT]:
+
+        world.move(-2)
+
+    if key_state[lc.K_SPACE]:
+
+        player.jump(jump_speed)
+
     # Move the player with gravity
     player.move_y()
 
