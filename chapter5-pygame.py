@@ -111,15 +111,40 @@ class Doom():
 
         self.base = pygame.Rect(0, screen_y - pit_depth, screen_x, pit_depth)
         self.color = color
+        self.fireballs = []
+
+        for i in range(0, fireball_num):
+
+            self.fireballs.append(Fireball())
+
+        self.fireball_plain = pygame.sprite.RenderPlain(self.fireballs)
 
     def move(self, dist):
-        pass
+
+        for fireball in self.fireballs:
+
+            fireball.move_x(dist)
 
     def update(self, screen):
 
+        for fireball in self.fireballs:
+
+            fireball.move_y()
+
+        self.fireball_plain.draw(screen)
         pygame.draw.rect(screen, self.color, self.base, 0)
 
     def collided(self, player_rect):
+
+        for fireball in self.fireballs:
+
+            if fireball.rect.colliderect(player_rect):
+
+                hit_box = fireball.rect.inflate(-int(fireball_size / 2), -int(fireball_size / 2))
+
+                if hit_box.colliderect(player_rect):
+
+                    return True
 
         return self.base.colliderect(player_rect)
 
@@ -127,16 +152,34 @@ class Doom():
 class Fireball(pygame.sprite.Sprite):
 
     def __init__(self):
-        pass
+
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(pygame.image.load(fireball_image), (fireball_size, fireball_size))
+        self.rect = self.image.get_rect()
+        self.reset()
 
     def reset(self):
-        pass
+
+        self.y = 0
+        self.speed_y = randint(fireball_low_speed, fireball_high_speed)
+        self.x = randint(0, screen_x)
+        self.rect.topleft = (self.x, self.y)
 
     def move_x(self, dist):
-        pass
+
+        self.rect.move_ip(dist, 0)
+
+        if self.rect.x < -50 or self.rect.x > screen_x:
+
+            self.reset()
 
     def move_y(self):
-        pass
+
+        self.rect.move_ip(0, self.speed_y)
+
+        if self.rect.y > screen_y:
+
+            self.reset()
 
     def update(self, screen, color):
         pass
@@ -170,6 +213,12 @@ jump_speed = -10
 
 doom_color = (255, 0, 0)
 
+fireball_size = 30
+fireball_number = 10
+fireball_low_speed = 3
+fireball_high_speed = 7
+fireball_image = 'flame.png'
+
 # Initialize pygame.mixer
 
 # Initialize pygame
@@ -188,7 +237,7 @@ player_plain = pygame.sprite.RenderPlain(player)
 
 world = World(level, 30, platform_color, goal_color)
 
-doom = Doom(0, 10, doom_color)
+doom = Doom(fireball_number, 10, doom_color)
 
 # Setup the background
 # Each loop is a frame
@@ -208,10 +257,12 @@ while not finished:
     if key_state[lc.K_LEFT]:
 
         world.move(2)
+        doom.move(2)
 
     elif key_state[lc.K_RIGHT]:
 
         world.move(-2)
+        doom.move(-2)
 
     if key_state[lc.K_SPACE]:
 
