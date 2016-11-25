@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.base = pygame.Rect(start_x, start_y + height, width, 2)
 
     def move_y(self):
-        pass
+        self.rect.y = self.rect.y + 1
 
     def jump(self, speed):
         pass
@@ -99,8 +99,10 @@ player_plain = pygame.sprite.RenderPlain(player)
 # Setup the background
 # Each loop is a frame
 while not finished:
-    pass
+
     # Blank screen
+    screen.fill((0, 0, 0))
+
     # Check events
     for event in pygame.event.get():
         if event.type == lc.QUIT:
@@ -108,6 +110,8 @@ while not finished:
 
     # Check which keys are held
     # Move the player with gravity
+    player.move_y()
+
     # Render the frame
     player_plain.draw(screen)
 
