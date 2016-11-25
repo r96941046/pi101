@@ -85,7 +85,14 @@ class World():
         return return_y
 
     def at_goal(self, player_rect):
-        pass
+
+        for block in self.goals:
+
+            if block.colliderect(player_rect):
+
+                return True
+
+        return False
 
     def update(self, screen):
 
@@ -214,5 +221,10 @@ while not finished:
 
     # Check if the player is dead
     # Check if the player has completed the level
+    if world.at_goal(player.rect):
+
+        print('Winner!')
+        finished = True
+
     # Set the speed
     clock.tick(20)
