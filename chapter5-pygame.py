@@ -126,7 +126,7 @@ class Fireball(pygame.sprite.Sprite):
 
 
 # Options
-screen_x, screen_y = 600, 400
+screen_x, screen_y = 900, 600
 game_name = 'Awesome Raspberry Pi Platformer'
 
 player_spawn_x, player_spawn_y = 50, 200
@@ -165,7 +165,7 @@ clock = pygame.time.Clock()
 player = Player(player_spawn_x, player_spawn_y, 20, 30)
 player_plain = pygame.sprite.RenderPlain(player)
 
-world = World(level, 20, platform_color, goal_color)
+world = World(level, 30, platform_color, goal_color)
 
 # Setup the background
 # Each loop is a frame
