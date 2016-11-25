@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = start_y
         self.speed_y = 0
         self.base = pygame.Rect(start_x, start_y + height, width, 2)
+        self.sound = pygame.mixer.Sound(jump_sound)
 
     def move_y(self):
 
@@ -36,6 +37,7 @@ class Player(pygame.sprite.Sprite):
         if world.collided_get_y(self.base) > 0:
 
             self.speed_y = speed
+            self.sound.play()
 
 
 class World():
@@ -219,7 +221,11 @@ fireball_low_speed = 3
 fireball_high_speed = 7
 fireball_image = 'flame.png'
 
+jump_sound = 'jump_04.wav'
+
 # Initialize pygame.mixer
+pygame.mixer.pre_init(44100, -16, 8, 2048)
+pygame.mixer.init()
 
 # Initialize pygame
 pygame.init()
