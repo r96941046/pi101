@@ -76,7 +76,7 @@ class World():
 
                 return_y = block.y - block.height + 1
 
-            return return_y
+        return return_y
 
     def at_goal(self, player_rect):
         pass
@@ -126,7 +126,7 @@ class Fireball(pygame.sprite.Sprite):
 
 
 # Options
-screen_x, screen_y = 900, 600
+screen_x, screen_y = 600, 400
 game_name = 'Awesome Raspberry Pi Platformer'
 
 player_spawn_x, player_spawn_y = 50, 200
