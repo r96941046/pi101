@@ -40,7 +40,7 @@ class World():
 
             for block in line:
 
-                if block == '=':
+                if block == '-':
                     self.platforms.append(pygame.Rect(self.posn_x, self.posn_y, block_size, block_size))
 
                 if block == 'G':
