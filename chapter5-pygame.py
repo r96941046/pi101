@@ -7,6 +7,7 @@ from random import randint
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, start_x, start_y, width, height):
+
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(player_image), (width, height))
         self.rect = self.image.get_rect()
@@ -16,7 +17,19 @@ class Player(pygame.sprite.Sprite):
         self.base = pygame.Rect(start_x, start_y + height, width, 2)
 
     def move_y(self):
-        self.rect.y = self.rect.y + 1
+
+        collided_y = world.collided_get_y(self.base)
+
+        if self.speed_y <= 0 or collided_y < 0:
+
+            self.rect.y = self.rect.y + self.speed_y
+            self.speed_y = self.speed_y + gravity
+
+        if collided_y > 0 and self.speed_y > 0:
+
+            self.rect.y = collided_y
+
+        self.base.y = self.rect.y + self.rect.height
 
     def jump(self, speed):
         pass
@@ -54,7 +67,16 @@ class World():
         pass
 
     def collided_get_y(self, player_rect):
-        pass
+
+        return_y = -1
+
+        for block in self.platforms:
+
+            if block.colliderect(player_rect):
+
+                return_y = block.y - block.height + 1
+
+            return return_y
 
     def at_goal(self, player_rect):
         pass
@@ -124,6 +146,8 @@ level = [
 ]
 platform_color = (100, 100, 100)
 goal_color = (0, 0, 255)
+
+gravity = 1
 
 # Initialize pygame.mixer
 
