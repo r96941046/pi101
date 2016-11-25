@@ -108,16 +108,20 @@ class World():
 class Doom():
 
     def __init__(self, fireball_num, pit_depth, color):
-        pass
+
+        self.base = pygame.Rect(0, screen_y - pit_depth, screen_x, pit_depth)
+        self.color = color
 
     def move(self, dist):
         pass
 
     def update(self, screen):
-        pass
+
+        pygame.draw.rect(screen, self.color, self.base, 0)
 
     def collided(self, player_rect):
-        pass
+
+        return self.base.colliderect(player_rect)
 
 
 class Fireball(pygame.sprite.Sprite):
@@ -164,6 +168,8 @@ gravity = 1
 
 jump_speed = -10
 
+doom_color = (255, 0, 0)
+
 # Initialize pygame.mixer
 
 # Initialize pygame
@@ -181,6 +187,8 @@ player = Player(player_spawn_x, player_spawn_y, 20, 30)
 player_plain = pygame.sprite.RenderPlain(player)
 
 world = World(level, 30, platform_color, goal_color)
+
+doom = Doom(0, 10, doom_color)
 
 # Setup the background
 # Each loop is a frame
@@ -215,11 +223,17 @@ while not finished:
     # Render the frame
     player_plain.draw(screen)
     world.update(screen)
+    doom.update(screen)
 
     # Update the display
     pygame.display.update()
 
     # Check if the player is dead
+    if doom.collided(player.rect):
+
+        print('You Lose!')
+        finished = True
+
     # Check if the player has completed the level
     if world.at_goal(player.rect):
 
