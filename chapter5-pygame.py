@@ -25,7 +25,30 @@ class Player(pygame.sprite.Sprite):
 class World():
 
     def __init__(self, level, block_size, color_platform, color_goals):
-        pass
+
+        self.platforms = []
+        self.goals = []
+        self.posn_y = 0
+        self.color = color_platform
+        self.color_goals = color_goals
+        self.block_size = block_size
+
+        # Draw the world according to level
+        for line in level:
+
+            self.posn_x = 0
+
+            for block in line:
+
+                if block == '=':
+                    self.platforms.append(pygame.Rect(self.posn_x, self.posn_y, block_size, block_size))
+
+                if block == 'G':
+                    self.goals.append(pygame.Rect(self.posn_x, self.posn_y, block_size, block_size))
+
+                self.posn_x = self.posn_x + block_size
+
+            self.posn_y = self.posn_y + block_size
 
     def move(self, dist):
         pass
@@ -37,7 +60,14 @@ class World():
         pass
 
     def update(self, screen):
-        pass
+
+        for block in self.platforms:
+
+            pygame.draw.rect(screen, self.color, block, 0)
+
+        for block in self.goals:
+
+            pygame.draw.rect(screen, self.color_goals, block, 0)
 
 
 class Doom():
@@ -80,6 +110,21 @@ game_name = 'Awesome Raspberry Pi Platformer'
 player_spawn_x, player_spawn_y = 50, 200
 player_image = 'lidia.png'
 
+level = [
+    "                              ",
+    "                              ",
+    "                              ",
+    "                              ",
+    "                              ",
+    "                              ",
+    "                              ",
+    "          ---                G",
+    "     -- --    ---       ------",
+    " -- -            -------      "
+]
+platform_color = (100, 100, 100)
+goal_color = (0, 0, 255)
+
 # Initialize pygame.mixer
 
 # Initialize pygame
@@ -95,6 +140,8 @@ clock = pygame.time.Clock()
 
 player = Player(player_spawn_x, player_spawn_y, 20, 30)
 player_plain = pygame.sprite.RenderPlain(player)
+
+world = World(level, 30, platform_color, goal_color)
 
 # Setup the background
 # Each loop is a frame
@@ -114,6 +161,7 @@ while not finished:
 
     # Render the frame
     player_plain.draw(screen)
+    world.update(screen)
 
     # Update the display
     pygame.display.update()
