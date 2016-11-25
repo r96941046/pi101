@@ -162,7 +162,6 @@ while not finished:
     # Render the frame
     player_plain.draw(screen)
     world.update(screen)
-    import ipdb; ipdb.set_trace();
 
     # Update the display
     pygame.display.update()
